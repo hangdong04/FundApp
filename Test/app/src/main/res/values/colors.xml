@@ -6,4 +6,5 @@
     <color name="textColorPrimary">#A7FFEB</color>
     <color name="windowBackground">#B2DFDB</color>
     <color name="navigationBarColor">#004D40</color>
+    <color name="colorFAB">#2196F3</color>
 </resources>
