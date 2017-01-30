@@ -9,7 +9,7 @@
         android:fromYDelta="-300%"
         android:interpolator="@android:anim/linear_interpolator"
         android:toXDelta="-20%"
-        android:toYDelta="-20%"></translate>
+        android:toYDelta="-10%"></translate>
 
     <!--Fade Out-->
     <alpha

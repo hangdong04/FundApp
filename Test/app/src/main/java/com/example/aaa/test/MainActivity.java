@@ -27,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab1;
     FloatingActionButton fab2;
     FloatingActionButton fab3;
-    CoordinatorLayout rootLayout;
-    LinearLayout fragmentLayout;
 
 
-    private boolean FAB_Status = false;
+    public boolean FAB_Status = false;
 
     Animation show_fab_1;
     Animation hide_fab_1;
@@ -50,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
         setSupportActionBar(toolbar);
         replaceFragment(new FundAllFragment());
-        rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
-        fragmentLayout = (LinearLayout)findViewById(R.id.fragment_container);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab_2);
@@ -63,17 +59,6 @@ public class MainActivity extends AppCompatActivity {
         hide_fab_2 = AnimationUtils.loadAnimation(getApplication(), R.anim.fab2_hide);
         show_fab_3 = AnimationUtils.loadAnimation(getApplication(), R.anim.fab3_show);
         hide_fab_3 = AnimationUtils.loadAnimation(getApplication(), R.anim.fab3_hide);
-
-        fragmentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (FAB_Status) {
-                    hideFAB();
-                    FAB_Status = false;
-                }
-                return false;
-            }
-        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void hideFAB() {
+    public void hideFAB() {
 
         //Floating Action Button 1
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();

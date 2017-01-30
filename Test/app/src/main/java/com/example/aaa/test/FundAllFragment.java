@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 public class FundAllFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+    boolean FAB_Status;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +37,18 @@ public class FundAllFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (((MainActivity) getActivity()).FAB_Status) {
+                    ((MainActivity) getActivity()).hideFAB();
+                    ((MainActivity) getActivity()).FAB_Status = false;
+                }
+                return false;
+            }
+        });
+
         String[] sName = { "KT-MINING", "KT-MAI", "KFJAPANRMF", "KTMSEQ", "KF-HJAPAND",
         "KFDYNAMIC", "KFDNM-D", "SCBUSSM", "ASP-NGF", "SCBCEH2" };
 
