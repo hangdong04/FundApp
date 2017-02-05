@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_compass"
+        android:src="@drawable/high_56"
         android:visibility="invisible"
         app:backgroundTint="@color/colorFAB"
         app:fabSize="mini" />
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_myplaces"
+        android:src="@drawable/med_56"
         android:visibility="invisible"
         app:backgroundTint="@color/colorFAB"
         app:fabSize="mini" />
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_share"
+        android:src="@drawable/low_56"
         android:visibility="invisible"
         app:backgroundTint="@color/colorFAB"
         app:fabSize="mini" />

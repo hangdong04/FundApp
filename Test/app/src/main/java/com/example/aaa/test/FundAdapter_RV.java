@@ -10,31 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.aaa.test.model.Fund;
+
+import java.util.List;
+
 public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHolder>{
     private Context mContext;
-    private String[] sName;
-    private String[] fName;
-    private String[] nav;
+    private List<Fund> funds;
 
     LayoutInflater inflater;
 
-    public FundAdapter_RV(Context context, String[] sName, String[] fName, String[] nav) {
+    public FundAdapter_RV(Context context, List<Fund> funds) {
         super();
         this.mContext= context;
-        this.sName = sName;
-        this.fName = fName;
-        this.nav = nav;
+        this.funds = funds;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView sNameText;
         TextView fNameText;
-        TextView navText;
+        TextView growthText;
         ViewHolder(View v){
             super(v);
             sNameText = (TextView)v.findViewById(R.id.sName);
             fNameText = (TextView)v.findViewById(R.id.fName);
-            navText = (TextView)v.findViewById(R.id.nav);
+            growthText = (TextView)v.findViewById(R.id.growth);
         }
     }
 
@@ -46,13 +46,13 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.sNameText.setText(sName[position]);
-        holder.fNameText.setText(fName[position]);
-        holder.navText.setText(nav[position]);
+        holder.sNameText.setText(funds.get(position).getName());
+        holder.fNameText.setText(funds.get(position).getName_th());
+        holder.growthText.setText(funds.get(position).getOne().toString());
     }
 
     @Override
     public int getItemCount() {
-        return sName.length;
+        return funds.size();
     }
 }

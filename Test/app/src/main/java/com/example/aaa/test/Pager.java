@@ -21,7 +21,7 @@ public class Pager extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                FundAllFragment tab1 = new FundAllFragment();
+                LTFFundFragment tab1 = new LTFFundFragment();
                 return tab1;
             default:
                 return null;

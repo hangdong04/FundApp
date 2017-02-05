@@ -19,7 +19,7 @@
             android:text="sName"
             android:textSize="20sp" />
         <TextView
-            android:id="@+id/nav"
+            android:id="@+id/growth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -36,12 +36,12 @@
         android:id="@+id/fName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="5dp"
         android:text="fName"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>
