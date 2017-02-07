@@ -4,6 +4,7 @@ package com.example.aaa.test;
  * Created by AAA on 26/1/2560.
  */
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,14 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.sNameText.setText(funds.get(position).getName());
         holder.fNameText.setText(funds.get(position).getName_th());
+        Float year_return;
+        year_return = funds.get(position).getOne();
+        if (year_return < 0){
+            holder.growthText.setTextColor(ContextCompat.getColor(mContext,R.color.textRed));
+        }
+        else {
+            holder.growthText.setTextColor(ContextCompat.getColor(mContext,R.color.textGreen));
+        }
         holder.growthText.setText(funds.get(position).getOne().toString());
     }
 
