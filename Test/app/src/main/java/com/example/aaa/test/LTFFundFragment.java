@@ -60,7 +60,7 @@ public class LTFFundFragment extends Fragment {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().post(new FABButtonSetupEvent("LTF"));
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.2:7000/")
+                .baseUrl("http://188.166.229.205:7070/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(APIService.class);
