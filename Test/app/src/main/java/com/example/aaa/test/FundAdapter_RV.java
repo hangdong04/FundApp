@@ -4,6 +4,7 @@ package com.example.aaa.test;
  * Created by AAA on 26/1/2560.
  */
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,7 +58,9 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
         else {
             holder.growthText.setTextColor(ContextCompat.getColor(mContext,R.color.textGreen));
         }
-        holder.growthText.setText(funds.get(position).getOne().toString());
+        String returnPoint;
+        returnPoint = String.format("%.2f %%",funds.get(position).getOne());
+        holder.growthText.setText(returnPoint);
     }
 
     @Override

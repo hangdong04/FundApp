@@ -10,9 +10,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/high_56"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:backgroundTint="@color/colorFAB"
-        app:fabSize="mini" />
+        app:fabSize="mini"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_2"
@@ -21,9 +21,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/med_56"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:backgroundTint="@color/colorFAB"
-        app:fabSize="mini" />
+        app:fabSize="mini"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_3"
@@ -32,7 +32,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/low_56"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:backgroundTint="@color/colorFAB"
-        app:fabSize="mini" />
+        app:fabSize="mini"/>
 </FrameLayout>

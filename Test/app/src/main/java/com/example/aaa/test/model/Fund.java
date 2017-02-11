@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class Fund {
     String Name;
     String Name_th;
-    Float one;
+    float one;
 
     public Fund(String Name,String Name_th,Float one) {
         this.Name = Name;
@@ -31,11 +31,11 @@ public class Fund {
         Name_th = name_th;
     }
 
-    public Float getOne() {
+    public float getOne() {
         return one;
     }
 
-    public void setOne(Float one) {
+    public void setOne(float one) {
         this.one = one;
     }
 }

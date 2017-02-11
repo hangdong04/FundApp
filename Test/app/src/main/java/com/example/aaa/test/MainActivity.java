@@ -75,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         titleText.setText("กองทุนรวม LTF");
         replaceFragment(new LTFFundFragment());
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab_2);
         fab3 = (FloatingActionButton) findViewById(R.id.fab_3);
+        setupButtonLTF();
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,9 +141,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                fab1.setVisibility(View.INVISIBLE);
-                fab2.setVisibility(View.INVISIBLE);
-                fab3.setVisibility(View.INVISIBLE);
                 if(FAB_Status){
                     hideFAB();
                     FAB_Status = false;
@@ -187,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtonLTF(){
-        fab1.setVisibility(View.INVISIBLE);
+        fab1.setVisibility(View.GONE);
         fab2.setVisibility(View.INVISIBLE);
         fab3.setVisibility(View.INVISIBLE);
         fab2.setImageResource(R.drawable.high_56);
@@ -203,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void expandFAB() {
+        Log.d("mode",""+mode);
         if (mode.equals("RMF")){
             //Floating Action Button 1
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
