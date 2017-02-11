@@ -58,7 +58,6 @@ public class LTFFundFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().post(new FABButtonSetupEvent("LTF"));
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://188.166.229.205:7070/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -67,8 +66,14 @@ public class LTFFundFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fundall_tab_re, container, false);
+        EventBus.getDefault().post(new FABButtonSetupEvent("LTF"));
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);

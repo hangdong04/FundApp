@@ -6,9 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab1;
     FloatingActionButton fab2;
     FloatingActionButton fab3;
+    NestedScrollView scrollView;
     String mode = "LTF";
 
     public boolean FAB_Status = false;
@@ -63,17 +66,19 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         titleText = (TextView)findViewById(R.id.toolbar_title);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
+        Log.d("MainCre",""+tabLayout.getSelectedTabPosition());
+
         tabLayout.addTab(tabLayout.newTab().setText("LTF Fund"));
         tabLayout.addTab(tabLayout.newTab().setText("RMF Fund"));
         setSupportActionBar(toolbar);
-        replaceFragment(new LTFFundFragment());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        titleText.setText("กองทุนรวม");
+        titleText.setText("กองทุนรวม LTF");
+        replaceFragment(new LTFFundFragment());
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab_2);
         fab3 = (FloatingActionButton) findViewById(R.id.fab_3);
-        ButtonLTF();
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                fab1.setVisibility(View.INVISIBLE);
+                fab2.setVisibility(View.INVISIBLE);
+                fab3.setVisibility(View.INVISIBLE);
                 if(FAB_Status){
                     hideFAB();
                     FAB_Status = false;
@@ -150,53 +157,51 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainRe",""+tabLayout.getSelectedTabPosition());
+        int pos = tabLayout.getSelectedTabPosition();
+        if (pos==1){
+            setupButtonLTF();
+        }
+        if (pos==2){
+            setupButtonRMF();
+        }
+
+    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-
         transaction.commit();
     }
 
-    private void ButtonLTF(){
-        fab1.setVisibility(View.GONE);
+    private void setupButtonLTF(){
+        fab1.setVisibility(View.INVISIBLE);
+        fab2.setVisibility(View.INVISIBLE);
+        fab3.setVisibility(View.INVISIBLE);
+        fab2.setImageResource(R.drawable.high_56);
+        fab3.setImageResource(R.drawable.med_56);
     }
 
-    private void ButtonRMF(){
-        fab1.setVisibility(View.VISIBLE);
+    private void setupButtonRMF(){
+        fab1.setVisibility(View.INVISIBLE);
+        fab2.setVisibility(View.INVISIBLE);
+        fab3.setVisibility(View.INVISIBLE);
+        fab2.setImageResource(R.drawable.med_56);
+        fab3.setImageResource(R.drawable.low_56);
     }
+
     private void expandFAB() {
         if (mode.equals("RMF")){
             //Floating Action Button 1
@@ -256,10 +261,10 @@ public class MainActivity extends AppCompatActivity {
     public void onMessageEvent(FABButtonSetupEvent event) {
         mode = event.mode;
         if (mode.equals("LTF")){
-            ButtonLTF();
+            setupButtonLTF();
         }
         if (mode.equals("RMF")){
-            ButtonRMF();
+            setupButtonRMF();
         }
     }
 }

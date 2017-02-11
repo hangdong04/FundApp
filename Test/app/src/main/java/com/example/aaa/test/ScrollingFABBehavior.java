@@ -1,22 +1,42 @@
 package com.example.aaa.test;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-
 /**
- * Created by Valdio Veliu on 1/13/2016.
+ * Created by phatt on 11/2/2560.
  */
-public class FabBehavior extends FloatingActionButton.Behavior {
+public class ScrollingFABBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
+    private static final String TAG = "ScrollingFABBehavior";
+    Handler mHandler;
 
-
-    public FabBehavior(Context context, AttributeSet attrs) {
+    public ScrollingFABBehavior(Context context, AttributeSet attrs) {
         super();
+    }
+
+    @Override
+    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, final FloatingActionButton child, View target) {
+        super.onStopNestedScroll(coordinatorLayout, child, target);
+
+        if (mHandler == null)
+            mHandler = new Handler();
+
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                child.animate().translationY(0).setInterpolator(new LinearInterpolator()).start();
+                Log.d("FabAnim","startHandler()");
+            }
+        },1000);
+
     }
 
     @Override
@@ -25,17 +45,22 @@ public class FabBehavior extends FloatingActionButton.Behavior {
 
         //child -> Floating Action Button
         if (dyConsumed > 0) {
+            Log.d("Scrolling","Up");
             CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
             int fab_bottomMargin = layoutParams.bottomMargin;
             child.animate().translationY(child.getHeight() + fab_bottomMargin).setInterpolator(new LinearInterpolator()).start();
         } else if (dyConsumed < 0) {
+            Log.d("Scrolling","down");
             child.animate().translationY(0).setInterpolator(new LinearInterpolator()).start();
         }
     }
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
+        if(mHandler!=null) {
+            mHandler.removeMessages(0);
+            Log.d("Scrolling","stopHandler()");
+        }
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
-
 }
