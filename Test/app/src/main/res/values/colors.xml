@@ -9,4 +9,9 @@
     <color name="colorFAB">#2196F3</color>
     <color name="textRed">#fe0505</color>
     <color name="textGreen">#08fe0e</color>
+    <color name="disableText">#42000000</color>
+    <color name="normalText">#000000</color>
+    <color name="disableButton">#1F000000</color>
+    <color name="normalButton">#2196F3</color>
+    <color name="PressedButton">#1976D2</color>
 </resources>

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.aaa.test.EventBus.FABButtonSetupEvent;
 import com.example.aaa.test.EventBus.LTFMessageEvent;
+import com.example.aaa.test.EventBus.NotifyListEvent;
 import com.example.aaa.test.EventBus.RMFMessageEvent;
 import com.example.aaa.test.model.Fund;
 import com.example.aaa.test.model.Question;
@@ -57,6 +58,18 @@ public class InterviewActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         prepareData();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        EventBus.getDefault().unregister(this);
     }
 
     private void prepareData(){
@@ -120,4 +133,5 @@ public class InterviewActivity extends AppCompatActivity {
         adaptor = new QuestionAdaptor(getApplicationContext(),items);
         recyclerView.setAdapter(adaptor);
     }
+
 }

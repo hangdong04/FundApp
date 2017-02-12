@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Question {
     String title;
+    int score = -1;
     List<String> items;
 
     public Question(String title, List<String> items) {
@@ -31,4 +32,11 @@ public class Question {
         this.title = title;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

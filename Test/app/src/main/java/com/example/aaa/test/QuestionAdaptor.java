@@ -2,6 +2,7 @@ package com.example.aaa.test;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.aaa.test.EventBus.NotifyListEvent;
 import com.example.aaa.test.model.Question;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -23,11 +28,13 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
     private List<Object> questions;
     private final int QUESTION =0, BUTTON = 1;
     LayoutInflater inflater;
+    Button button;
 
     public QuestionAdaptor(Context context, List<Object> questions) {
         super();
         this.mContext= context;
         this.questions = questions;
+
         this.inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     public class ViewHolder1 extends RecyclerView.ViewHolder{
@@ -37,6 +44,7 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
         RadioButton choice3;
         RadioButton choice4;
         RadioGroup choiceGroup;
+
         ViewHolder1(View v){
             super(v);
             titleText = (TextView)v.findViewById(R.id.question_title);
@@ -47,13 +55,16 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
             choice4 = (RadioButton)v.findViewById(R.id.choice4);
         }
     }
-    public class ViewHolder3 extends RecyclerView.ViewHolder {
 
-        Button button;
+    public class ViewHolder3 extends RecyclerView.ViewHolder {
         ViewHolder3(View v){
             super(v);
             button = (Button)v.findViewById(R.id.done_button);
         }
+//        public void buttonState(){
+//                button.setEnabled(true);
+//        }
+
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,11 +87,11 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         switch (holder.getItemViewType()){
             case QUESTION:
                 ViewHolder1 vh1 = (ViewHolder1) holder;
-                Question qObj = (Question)questions.get(position);
+                final Question qObj = (Question)questions.get(position);
                 vh1.titleText.setText(qObj.getTitle());
                 List<String> choice = qObj.getItems();
                 if (!choice.isEmpty()) {
@@ -89,10 +100,23 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
                     vh1.choice3.setText(choice.get(2));
                     vh1.choice4.setText(choice.get(3));
                 }
+                vh1.choiceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        View radioButton = radioGroup.findViewById(i);
+                        int index = radioGroup.indexOfChild(radioButton);
+                        qObj.setScore(index);
+                        if (checkScore()){
+                            button.setEnabled(true);
+                        }else {
+                            button.setEnabled(false);
+                        }
+                    }
+                });
                 break;
             case BUTTON:
                 ViewHolder3 vh2 = (ViewHolder3) holder;
-                vh2.button.setClickable(true);
+//                vh2.button.setClickable(true);
                 break;
             default:
                 break;
@@ -113,5 +137,19 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
     @Override
     public int getItemCount() {
         return questions.size();
+    }
+
+    public int score(int position){
+        Question qObj = (Question)questions.get(position);
+        return qObj.getScore();
+    }
+
+    public boolean checkScore(){
+        for(int i = 0;i<7;i++){
+            if (score(i)== -1){
+                return false;
+            }
+        }
+        return true;
     }
 }
