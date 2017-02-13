@@ -117,20 +117,20 @@ public class RMFFundFragment extends Fragment {
 
     @Subscribe
     public void onMessageEvent(RMFMessageEvent event){
-        Call<List<Fund>> call = api.getRMFbyRisk(event.riskLevel);
+                Call<List<Fund>> call = api.getRMFbyRisk(event.riskLevel);
 
-        call.enqueue(new Callback<List<Fund>>() {
-            @Override
-            public void onResponse(Call<List<Fund>> call, Response<List<Fund>> response) {
-                List<Fund> funds = response.body();
-                notifyAdapter(funds);
-                for (Fund fund : funds) {
-                    System.out.println(fund.getName() + " (" + fund.getName_th()+ ")");
-                }
-                Log.d("data", funds.toString());
-            }
+                call.enqueue(new Callback<List<Fund>>() {
+                    @Override
+                    public void onResponse(Call<List<Fund>> call, Response<List<Fund>> response) {
+                        List<Fund> funds = response.body();
+                        notifyAdapter(funds);
+                        for (Fund fund : funds) {
+                            System.out.println(fund.getName() + " (" + fund.getName_th()+ ")");
+                        }
+                        Log.d("data", funds.toString());
+                    }
 
-            @Override
+                    @Override
             public void onFailure(Call<List<Fund>> call, Throwable t) {
                 System.out.println(call.request().url() + ": failed: " + t);
             }

@@ -11,11 +11,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.aaa.test.EventBus.NotifyListEvent;
+import com.example.aaa.test.EventBus.NotifyDialogEvent;
 import com.example.aaa.test.model.Question;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -60,11 +59,13 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
         ViewHolder3(View v){
             super(v);
             button = (Button)v.findViewById(R.id.done_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new NotifyDialogEvent(getScore()));
+                }
+            });
         }
-//        public void buttonState(){
-//                button.setEnabled(true);
-//        }
-
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -108,15 +109,12 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
                         qObj.setScore(index);
                         if (checkScore()){
                             button.setEnabled(true);
-                        }else {
-                            button.setEnabled(false);
                         }
                     }
                 });
                 break;
             case BUTTON:
                 ViewHolder3 vh2 = (ViewHolder3) holder;
-//                vh2.button.setClickable(true);
                 break;
             default:
                 break;
@@ -151,5 +149,13 @@ public class QuestionAdaptor extends RecyclerView.Adapter <RecyclerView.ViewHold
             }
         }
         return true;
+    }
+
+    public int getScore(){
+        int sc = 0;
+        for(int i = 0;i<7;i++){
+            sc += score(i);
+        }
+        return sc;
     }
 }

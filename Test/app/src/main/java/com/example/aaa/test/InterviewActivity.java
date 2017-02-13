@@ -1,31 +1,22 @@
 package com.example.aaa.test;
 
-import android.content.res.Resources;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.widget.TextView;
 
-import com.example.aaa.test.EventBus.FABButtonSetupEvent;
-import com.example.aaa.test.EventBus.LTFMessageEvent;
-import com.example.aaa.test.EventBus.NotifyListEvent;
-import com.example.aaa.test.EventBus.RMFMessageEvent;
-import com.example.aaa.test.model.Fund;
+import com.example.aaa.test.EventBus.NotifyDialogEvent;
 import com.example.aaa.test.model.Question;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class InterviewActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -63,13 +53,13 @@ public class InterviewActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     private void prepareData(){
@@ -132,6 +122,40 @@ public class InterviewActivity extends AppCompatActivity {
         items.add("button");
         adaptor = new QuestionAdaptor(getApplicationContext(),items);
         recyclerView.setAdapter(adaptor);
+    }
+
+    private void goMain(){
+        Intent intent = new Intent(InterviewActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Subscribe
+    public void onMessageEvent(NotifyDialogEvent event) {
+        int score = event.score;
+        String message = getString(R.string.dialog_text);
+        String riskMessage;
+        if (score <=7){
+            riskMessage = getString(R.string.low_risk);
+        }
+        else if (score<=14){
+            riskMessage = getString(R.string.medium_risk);
+        }else {
+            riskMessage = getString(R.string.high_risk);
+        }
+        SpannableString text = new SpannableString(message + riskMessage);
+        text.setSpan(new StyleSpan(Typeface.BOLD), message.length(),message.length()+riskMessage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(InterviewActivity.this,R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(R.string.dialog_title);
+        builder.setMessage(text);
+        builder.setPositiveButton(R.string.dialog_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goMain();
+            }
+        });
+        builder.show();
     }
 
 }
