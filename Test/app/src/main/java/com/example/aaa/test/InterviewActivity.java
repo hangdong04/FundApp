@@ -155,6 +155,7 @@ public class InterviewActivity extends AppCompatActivity {
                 goMain();
             }
         });
+        builder.setCancelable(false);
         builder.show();
     }
 

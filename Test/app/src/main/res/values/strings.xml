@@ -40,11 +40,8 @@
     <string name="done_button">ส่งแบบสอบถาม</string>
     <string name="dialog_title">ผลการประเมินแบบสอบถาม</string>
     <string name="dialog_button">ตกลง</string>
-    <string name="dialog_text">ความเเสี่ยงที่คุณรับได้คือ</string>
-    <string name="low_risk">\n\nความเสี่ยงน้อย</string>
-    <string name="medium_risk">\n\nความเสี่ยงกลาง</string>
-    <string name="high_risk">\n\nความเสี่ยงสูง</string>
-
-
-
+    <string name="dialog_text">\nความเสี่ยงที่คุณรับได้คือ</string>
+    <string name="low_risk">&#160;ความเสี่ยงต่ำ</string>
+    <string name="medium_risk">&#160;ความเสี่ยงกลาง</string>
+    <string name="high_risk">&#160;ความเสี่ยงสูง</string>
 </resources>
