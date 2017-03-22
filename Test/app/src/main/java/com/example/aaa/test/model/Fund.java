@@ -9,6 +9,10 @@ public class Fund {
     String Name;
     String Name_th;
     float one;
+    float three;
+    float five;
+    float seven;
+
 
     public Fund(String Name,String Name_th,Float one) {
         this.Name = Name;
@@ -37,5 +41,29 @@ public class Fund {
 
     public void setOne(float one) {
         this.one = one;
+    }
+
+    public float getThree() {
+        return three;
+    }
+
+    public void setThree(float three) {
+        this.three = three;
+    }
+
+    public float getFive() {
+        return five;
+    }
+
+    public void setFive(float five) {
+        this.five = five;
+    }
+
+    public float getSeven() {
+        return seven;
+    }
+
+    public void setSeven(float seven) {
+        this.seven = seven;
     }
 }

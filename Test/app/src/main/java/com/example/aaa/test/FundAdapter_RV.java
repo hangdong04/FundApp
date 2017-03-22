@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.aaa.test.EventBus.FABButtonSetupEvent;
 import com.example.aaa.test.model.Fund;
 import com.example.aaa.test.model.MyAxisValueFormatter;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.silencedut.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -80,7 +82,7 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.sNameText.setText(funds.get(position).getName());
         holder.fNameText.setText(funds.get(position).getName_th());
-        chartSetup(holder.chart);
+        chartSetup(position,holder.chart);
 
         Float year_return;
         year_return = funds.get(position).getOne();
@@ -116,15 +118,34 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
     private void addExpand(int position) {
         mExpandedPositionSet.add(position);
     }
-    private void chartSetup(HorizontalBarChart chart){
+    private void chartSetup(int position, HorizontalBarChart chart){
         // chart.setHighlightEnabled(false);
-
+        float one = funds.get(position).getOne();
+        float three = funds.get(position).getThree();
+        float five = funds.get(position).getFive();
+        float seven = funds.get(position).getSeven();
+        float[] per_growth = {one,three,five,seven};
+        Arrays.sort(per_growth);
+        float min = Math.round(per_growth[0]);
+        if (min >0){
+            System.out.println("######MIN:"+min);
+            min = 0f;
+        }else if (min > -20)
+        {
+            System.out.println("######MIN-20:"+min);
+            min -= 10f;
+        }
+        else {
+            System.out.println("######MIN-EL:"+min);
+            min -= 2f;
+        }
+        float max = Math.round(per_growth[per_growth.length -1]);
+        max = max+10f;
         chart.setDrawBarShadow(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setDrawValueAboveBar(true);
         chart.setTouchEnabled(false);
         chart.getDescription().setEnabled(false);
-
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         chart.setMaxVisibleValueCount(60);
@@ -150,7 +171,7 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
 //        yl.setTypeface(mTfLight);
         yl.setDrawAxisLine(false);
         yl.setDrawGridLines(false);
-        yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        yl.setAxisMinimum(min); // this replaces setStartAtZero(true)
         yl.setDrawLabels(false);
 //        yl.setInverted(true);
 
@@ -159,10 +180,10 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
         yr.setDrawAxisLine(false);
         yr.setDrawGridLines(false);
         yr.setDrawLabels(false);
-        yr.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+//        yr.setAxisMinimum(max); // this replaces setStartAtZero(true)
 //        yr.setInverted(true);
 
-        setData(4, 30, chart);
+        setData(position, chart);
         chart.setFitBars(true);
         chart.animateY(2500);
 
@@ -177,16 +198,21 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
 //        l.setWordWrapEnabled(false);
 
     }
-    private void setData(int count, float range, HorizontalBarChart chart) {
+    private void setData(int position, HorizontalBarChart chart) {
 
         float barWidth = 9f;
         float spaceForBar = 10f;
+        float one = funds.get(position).getOne();
+        float three = funds.get(position).getThree();
+        float five = funds.get(position).getFive();
+        float seven = funds.get(position).getSeven();
+
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * range);
-            yVals1.add(new BarEntry(i * spaceForBar, val));
-        }
+        yVals1.add(new BarEntry(0 * spaceForBar, one));
+        yVals1.add(new BarEntry(1 * spaceForBar, three));
+        yVals1.add(new BarEntry(2 * spaceForBar, five));
+        yVals1.add(new BarEntry(3 * spaceForBar, seven));
 
         BarDataSet set1;
 
@@ -207,7 +233,9 @@ public class FundAdapter_RV extends RecyclerView.Adapter <FundAdapter_RV.ViewHol
             data.setValueTextSize(10f);
 //            data.setValueTypeface(mTfLight);
             data.setBarWidth(barWidth);
+            data.setDrawValues(true);
             chart.setData(data);
+            chart.invalidate();
         }
     }
 }
